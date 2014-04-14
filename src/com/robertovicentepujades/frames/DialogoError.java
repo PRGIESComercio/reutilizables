@@ -1,0 +1,277 @@
+package com.robertovicentepujades.frames;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import javax.swing.SwingConstants;
+
+/**
+ * Ventana de diálogo para mostrar errores
+ *
+ * @author Roberto Vicente Pujades
+ */
+public class DialogoError extends javax.swing.JDialog {
+
+    private String errorUsuario;
+    private Exception errorDetallado;
+    private String tituloVentana;
+    private String tituloError;
+    
+    private final int anchoDialogo = 670;
+    private final int altoDialogoSinDetalles = 170;
+    private final int altoDialogoConDetalles = 400;
+
+    /**
+     * Crea una nueva ventana de diálogo
+     *
+     * @param parent Frame JFrame que llama al diálogo
+     * @param modal boolean Si queremos que sea modal
+     * @param tituloVentana String El título del diálogo
+     * @param errorUsuario String El error de cara al usuario
+     * @param errorDetallado String El error detallado
+     */
+    public DialogoError(java.awt.Frame parent, boolean modal, String tituloVentana, String errorUsuario, Exception errorDetallado, String tituloError) {
+        super(parent, modal);
+        initComponents();
+
+        this.errorUsuario = errorUsuario;
+        this.tituloVentana = tituloVentana;
+        this.errorDetallado = errorDetallado;
+        this.tituloError = tituloError;
+
+        configurarVentana();
+        cargarErrores();
+    }
+
+    /**
+     * Método que configura la ventana
+     */
+    private void configurarVentana() {
+        this.jPanelErrorDetallado.setVisible(false);
+        this.setTitle(tituloVentana);
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/com/robertovicentepujades/frames/resources/info.png")).getImage());
+        this.setSize(new java.awt.Dimension(anchoDialogo, altoDialogoSinDetalles));
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        
+
+        this.jPanelCabecera.setBackground(Color.white);
+        this.jLabelCabecera.setText(tituloError);
+        this.jLabelCabecera.setFont(new Font("Tahoma", 1, 15));
+        this.jLabelCabecera.setHorizontalAlignment(SwingConstants.CENTER);
+
+        this.jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/robertovicentepujades/frames/resources/info.png")));
+        this.jLabelIcono.setText("");
+
+
+        this.jTextAreaErrorDetallado.setEditable(false);
+    }
+
+    /**
+     * Método que carga los errores guardados en las propiedades en los componentes de la interfaz
+     */
+    private void cargarErrores() {
+
+        StringWriter errors = new StringWriter();
+        errorDetallado.printStackTrace(new PrintWriter(errors));
+
+        this.jLabelErrorUsuario.setText(errorUsuario);
+        this.jTextAreaErrorDetallado.setText(errors.toString());
+    }
+    
+    /**
+     * Método que reconfigura el gridbaglayout del Jframe para que se estire el panel principal o el del error detallado.
+     * Con esto consigo que el panel cabecera esté siempre pegado arriba del jframe
+     * @param mostrar boolean true si se va a mostrar el jpanel del error detallado y false si se va a ocultar
+     */
+    private void reconfigurarGridBag(boolean mostrar){
+        java.awt.GridBagConstraints gridBagConstraints;
+        if (mostrar){
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 1;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.weighty = 0.0;
+            gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+            getContentPane().add(jPanelPrincipal, gridBagConstraints);
+
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 2;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.weighty = 1.0;
+            gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+            getContentPane().add(jPanelErrorDetallado, gridBagConstraints);
+        }else{
+            gridBagConstraints = new java.awt.GridBagConstraints();
+            gridBagConstraints.gridx = 0;
+            gridBagConstraints.gridy = 1;
+            gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+            gridBagConstraints.weightx = 1.0;
+            gridBagConstraints.weighty = 1.0;
+            gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+            getContentPane().add(jPanelPrincipal, gridBagConstraints);
+        }
+        
+    }
+
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
+
+        jPanelCabecera = new javax.swing.JPanel();
+        jLabelCabecera = new javax.swing.JLabel();
+        jPanelPrincipal = new javax.swing.JPanel();
+        jButtonDetalles = new javax.swing.JButton();
+        jButtonAceptar = new javax.swing.JButton();
+        jLabelErrorUsuario = new javax.swing.JLabel();
+        jLabelIcono = new javax.swing.JLabel();
+        jPanelErrorDetallado = new javax.swing.JPanel();
+        jScrollPaneErrorDetallado = new javax.swing.JScrollPane();
+        jTextAreaErrorDetallado = new javax.swing.JTextArea();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        getContentPane().setLayout(new java.awt.GridBagLayout());
+
+        jPanelCabecera.setLayout(new java.awt.GridBagLayout());
+
+        jLabelCabecera.setText("Mensaje cabecera");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanelCabecera.add(jLabelCabecera, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.PAGE_START;
+        gridBagConstraints.weightx = 1.0;
+        getContentPane().add(jPanelCabecera, gridBagConstraints);
+
+        jPanelPrincipal.setLayout(new java.awt.GridBagLayout());
+
+        jButtonDetalles.setText("Mostrar detalles");
+        jButtonDetalles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonDetallesActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_END;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanelPrincipal.add(jButtonDetalles, gridBagConstraints);
+
+        jButtonAceptar.setText("Aceptar");
+        jButtonAceptar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAceptarActionPerformed(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        jPanelPrincipal.add(jButtonAceptar, gridBagConstraints);
+
+        jLabelErrorUsuario.setText("jLabel1");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 5, 5);
+        jPanelPrincipal.add(jLabelErrorUsuario, gridBagConstraints);
+
+        jLabelIcono.setText("Icono");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(10, 5, 5, 5);
+        jPanelPrincipal.add(jLabelIcono, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(0, 5, 0, 5);
+        getContentPane().add(jPanelPrincipal, gridBagConstraints);
+
+        jPanelErrorDetallado.setLayout(new java.awt.GridBagLayout());
+
+        jTextAreaErrorDetallado.setColumns(20);
+        jTextAreaErrorDetallado.setRows(5);
+        jScrollPaneErrorDetallado.setViewportView(jTextAreaErrorDetallado);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        jPanelErrorDetallado.add(jScrollPaneErrorDetallado, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        getContentPane().add(jPanelErrorDetallado, gridBagConstraints);
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAceptarActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonAceptarActionPerformed
+
+    private void jButtonDetallesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonDetallesActionPerformed
+        
+        if (this.jButtonDetalles.getText().equals("Mostrar detalles")) {
+            this.jButtonDetalles.setText("Ocultar detalles");
+            this.jPanelErrorDetallado.setVisible(true);
+            this.setSize(new java.awt.Dimension(anchoDialogo, altoDialogoConDetalles));
+
+            this.reconfigurarGridBag(true);
+
+        } else {
+            this.jButtonDetalles.setText("Mostrar detalles");
+            this.jPanelErrorDetallado.setVisible(false);
+            this.setSize(new java.awt.Dimension(anchoDialogo, altoDialogoSinDetalles));
+
+            this.reconfigurarGridBag(false);
+
+        }
+    }//GEN-LAST:event_jButtonDetallesActionPerformed
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonAceptar;
+    private javax.swing.JButton jButtonDetalles;
+    private javax.swing.JLabel jLabelCabecera;
+    private javax.swing.JLabel jLabelErrorUsuario;
+    private javax.swing.JLabel jLabelIcono;
+    private javax.swing.JPanel jPanelCabecera;
+    private javax.swing.JPanel jPanelErrorDetallado;
+    private javax.swing.JPanel jPanelPrincipal;
+    private javax.swing.JScrollPane jScrollPaneErrorDetallado;
+    private javax.swing.JTextArea jTextAreaErrorDetallado;
+    // End of variables declaration//GEN-END:variables
+}
