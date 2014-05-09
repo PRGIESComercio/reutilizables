@@ -1,4 +1,4 @@
-package com.robertovicentepujades.frames;
+package com.robertovicentepujades.mantenimientos.archivos.dialogoerror;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -50,7 +50,7 @@ public class DialogoError extends javax.swing.JDialog {
     private void configurarVentana() {
         this.jPanelErrorDetallado.setVisible(false);
         this.setTitle(tituloVentana);
-        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/com/robertovicentepujades/frames/resources/info.png")).getImage());
+        this.setIconImage(new javax.swing.ImageIcon(getClass().getResource("/com/robertovicentepujades/mantenimientos/archivos/dialogoerror/resources/info.png")).getImage());
         this.setSize(new java.awt.Dimension(anchoDialogo, altoDialogoSinDetalles));
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -61,7 +61,7 @@ public class DialogoError extends javax.swing.JDialog {
         this.jLabelCabecera.setFont(new Font("Tahoma", 1, 15));
         this.jLabelCabecera.setHorizontalAlignment(SwingConstants.CENTER);
 
-        this.jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/robertovicentepujades/frames/resources/info.png")));
+        this.jLabelIcono.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/robertovicentepujades/mantenimientos/archivos/dialogoerror/resources/info.png")));
         this.jLabelIcono.setText("");
 
 
